@@ -80,10 +80,11 @@ Route::group(
                     ],
                     function(){
                         Route::get('/manage', [UploadFileController::class, 'manage'])->name('manage');
+                        Route::get('/upload', [UploadFileController::class, 'upload'])->name('upload');
                         Route::get('/images', [UploadFileController::class, 'images'])->name('images');
-                        Route::post('/save', [UploadFileController::class, 'save'])->name('save');
+                        Route::post('/store', [UploadFileController::class, 'store'])->name('store');
                         Route::get('/edit/{id}', [UploadFileController::class, 'edit'])->name('edit');
-                        Route::post('/update', [UploadFileController::class, 'update'])->name('update');
+                        Route::post('/remove', [UploadFileController::class, 'remove'])->name('remove');
                     }
                 );
             }
