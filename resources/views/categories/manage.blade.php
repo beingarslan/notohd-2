@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-header">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddModel">
-                        <i data-feather='user-plus'></i>
+                        Add Category
                     </button>
                 </div>
                 <div class="card body">
@@ -28,9 +28,9 @@
                         <thead>
                             <tr>
                                 <th>id</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
+                                <th>Title</th>
+                                <th>Parent</th>
+                                <th>No. Of Child</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -50,44 +50,40 @@
                 </div>
                 <div class="modal-body pb-5 px-sm-5 pt-50">
                     <div class="text-center mb-2">
-                        <h1 class="mb-1">Add User Information</h1>
+                        <h1 class="mb-1">Add Category Information</h1>
                         <!-- <p>Updating user details will receive a privacy audit.</p> -->
                     </div>
-                    <form id="editUserForm" class="row gy-1 pt-75" action="{{route('admin.users.save')}}" method="POST">
+                    <form id="editUserForm" class="row gy-1 pt-75" action="{{route('admin.categories.save')}}" method="POST">
                         @csrf
-                        <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditUserFirstName">Name</label>
-                            <input type="text" id="modalEditUserFirstName" name="name" class="form-control" placeholder="Name" value="" data-msg="Please enter your first name" />
+                        <div class="col-12">
+                            <label class="form-label" for="modalEditUserFirstName">Title</label>
+                            <input type="text" id="modalEditUserFirstName" name="title" class="form-control" placeholder="Title" value="" data-msg="Please enter your first name" />
                         </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditUserLastName">Email</label>
-                            <input type="email" id="modalEditUserLastName" name="email" class="form-control" placeholder="Email" value="" data-msg="Please enter your last name" />
+                        <!-- description -->
+                        <div class="col-12">
+                            <label class="form-label" for="modalEditUserLastName">Description</label>
+                            <textarea name="description" id="modalEditUserLastName" class="form-control" placeholder="Description" data-msg="Please enter your last name"></textarea>
                         </div>
+                        <!-- parent -->
                         <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditUserName">Password</label>
-                            <input type="password" id="modalEditUserName" name="password" class="form-control" value="" placeholder="Password" />
+                            <label class="form-label" for="modalEditUserEmail">Parent (optional)</label>
+                            <select name="parent_id" id="modalEditUserEmail" class="form-control" data-msg="Please enter your email address">
+                                <option value="">Select Parent</option>
+                                @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->title}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditUserName">Confirm Password</label>
-                            <input type="password" id="modalEditUserName" name="password_confirmation" class="form-control" value="" placeholder="Confirm Password" />
-                        </div>
+
                         <div class="col-12 col-md-6">
                             <label class="form-label" for="modalEditUserStatus">Status</label>
                             <select id="modalEditUserStatus" name="status" class="form-select" aria-label="Default select example">
-                                <option selected value="" >Status</option>
+                                <option selected value="">Status</option>
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label" for="modalEditUserCountry">Role</label>
-                            <select id="modalEditUserCountry" name="role" class="select2 form-select">
-                                <option selected value="">Select Role</option>
-                                @foreach($roles as $role)
-                                <option value="{{$role}}">{{$role}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+
 
                         <div class="col-12 text-center mt-2 pt-50">
                             <button type="submit" class="btn btn-primary me-1">Submit</button>
@@ -133,7 +129,7 @@
             responsive: false,
             processing: true,
             serverSide: true,
-            ajax: '{!! route("admin.users.users") !!}',
+            ajax: '{!! route("admin.categories.categories") !!}',
             columns: [
 
 
@@ -142,25 +138,19 @@
                     name: 'id'
                 },
                 {
-                    data: 'name',
+                    data: 'title',
                     render: function(data) {
                         return '<b>' + data + '</b>'
                     }
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: 'parent',
+                    name: 'parent'
                 },
                 {
-                    data: 'role',
+                    data: 'child',
                     render: function(data) {
-                        if(data == "Admin"){
-                            return '<span class="badge badge-glow bg-success">Admin</span>'
-
-                        }
-                        else{
-                            return '<span class="badge badge-glow bg-info">User</span>'
-                        }
+                            return '<span class="badge bg-primary">'+data+'</span>'
                     }
                 },
                 {
