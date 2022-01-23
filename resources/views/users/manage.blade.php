@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="form-label" for="modalEditUserName">Confirm Password</label>
-                            <input type="password" id="modalEditUserName" name="confirm_password" class="form-control" value="" placeholder="Confirm Password" />
+                            <input type="password" id="modalEditUserName" name="password_confirmation" class="form-control" value="" placeholder="Confirm Password" />
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="form-label" for="modalEditUserStatus">Status</label>

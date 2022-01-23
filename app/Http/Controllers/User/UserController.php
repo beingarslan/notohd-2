@@ -7,12 +7,15 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function manage()
     {
         $roles = Role::all()->pluck('name');
+        // Toastr::success('Post Successfully Saved :)','Success');
 
         return view('users.manage', compact('roles'));
     }
@@ -88,18 +91,41 @@ class UserController extends Controller
 
 
     // save user information
-    public function save(Request $request){
+    public function save(Request $request)
+    {
         // validate informtion
         $validated = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'required|min:6',
             'role' => 'required',
             'status' => 'required',
         ]);
 
-        if($validated->fails()){
-            Toastr::info('message', 'title', ['options']);
+        if ($validated->fails()) {
+            foreach ($validated->errors()->all() as $error) {
+                Toastr::error($error, 'Error');
+            }
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            // save user information
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->status = $request->status;
+            $user->save();
+            $user->assignRole(User::USER);
+
+            Toastr::success('User Successfully Saved :)', 'Success');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            // throw $th;
+            Toastr::error('Something went wrong!', 'Error');
+            return redirect()->back();
         }
     }
 }
