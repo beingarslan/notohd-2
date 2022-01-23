@@ -1,6 +1,14 @@
 <?php
 
 return [
+    //
+    "Users" => "Users",
+    "Users Management" => "Users Management",
+    "Categories" => "Categories",
+    "Categories Management" => "Categories Management",
+    "Images" => "Images",
+    "Images Management" => "Images Management",
+    //
     "Apps & Pages" => "Apps & Pages",
     "User Interface" => "User Interface",
     "Dashboards" => "Dashboards",
