@@ -66,7 +66,7 @@ class CategoryController extends Controller
                 $nestedData['status'] = $category->status;
                 $nestedData['parent'] = $category->parent ? $category->parent->title : '-';
                 $nestedData['child'] = count($category->child) > 0 ? count($category->child) : 0;
-                $nestedData['action'] = '<a href="/admin/categories/edit/' . $category->id . '" class="btn btn-sm btn-primary">Edit</a>';
+                $nestedData['action'] = '<a href="#/admin/categories/edit/' . $category->id . '" class="btn btn-sm btn-primary">Edit</a>';
                 $data[] = $nestedData;
             }
         }

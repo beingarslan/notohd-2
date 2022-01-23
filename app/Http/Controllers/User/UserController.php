@@ -68,7 +68,7 @@ class UserController extends Controller
                     $nestedData['action'] =
                         '
                         <div class="btn-group">
-                            <a href="button" class="btn btn-outline-primary waves-effect" ' . $user->id . '">Edit</a>
+                            <a href="#button" class="btn btn-outline-primary waves-effect" ' . $user->id . '">Edit</a>
                         </div>
                         ';
 

@@ -51,6 +51,7 @@
 @section('page-script')
 <!-- Page js files -->
 <script type="text/javascript">
+
     Dropzone.options.dropzone = {
         maxFilesize: 12,
         renameFile: function(file) {
@@ -58,7 +59,7 @@
             var time = dt.getTime();
             return time + file.name;
         },
-        acceptedFiles: ".jpeg,.jpg,.png,.gif",
+        acceptedFiles: ".jpeg,.jpg,.png",
         addRemoveLinks: true,
         timeout: 50000,
         removedfile: function(file) {
@@ -68,7 +69,7 @@
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 },
                 type: 'POST',
-                url: '{{ url("admin/images/remove") }}',
+                url: '{!! route("admin.images.remove") !!}',
                 data: {
                     filename: name
                 },
@@ -76,6 +77,8 @@
                     console.log("File has been successfully removed!!");
                 },
                 error: function(e) {
+                    toastr.error("error", 'file not removed');
+
                     console.log(e);
                 }
             });
@@ -85,9 +88,15 @@
         },
 
         success: function(file, response) {
+            toastr.success(file, response)
+
             console.log(response);
         },
         error: function(file, response) {
+            // toast error
+
+            toastr.error(response, file)
+
             return false;
         }
     };

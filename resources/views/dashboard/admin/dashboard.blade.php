@@ -1,6 +1,5 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Advance Card')
 
 @section('vendor-style')
 <link rel="stylesheet" href="{{asset(mix('vendors/css/charts/apexcharts.css'))}}">

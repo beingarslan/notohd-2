@@ -2,6 +2,7 @@
 
 return [
     //
+    "Dashboard" => "Dashboard",
     "Users" => "Users",
     "Users Management" => "Users Management",
     "Categories" => "Categories",

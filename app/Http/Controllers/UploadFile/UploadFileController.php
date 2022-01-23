@@ -13,7 +13,10 @@ class UploadFileController extends Controller
 {
     public function manage(Request $request)
     {
-        return view('uploadfiles.manage');
+        // paginatation
+        return view('uploadfiles.manage', [
+            'images' => UploadFile::paginate(12)
+        ]);
     }
 
     public function upload(Request $request)
@@ -36,15 +39,18 @@ class UploadFileController extends Controller
             foreach ($validator->errors()->all() as $error) {
                 Toastr::error($error, 'Error');
             }
-            return redirect()->back()->withInput();
+            return response()->json(['error' => 'Error']);
         }
 
         $image = $request->file('file');
-        $imageName = $image->getClientOriginalName();
-        $path = Storage::disk('Wasabi')->delete('uploads/' . time().$imageName);
+        // get file extension
+        $extension = $image->getClientOriginalExtension();
+        $imageName = 'file_' . time() . '.' . $extension;
+        // store file
+        $path = Storage::disk('Wasabi')->putFileAs('uploads', $image, $imageName, 'public');
 
         $imageUpload = new UploadFile();
-        $imageUpload->filename = $imageName;
+        $imageUpload->filename = $path;
         $imageUpload->save();
         return response()->json(['success' => $imageName]);
     }
