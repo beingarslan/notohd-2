@@ -23,7 +23,7 @@
                         <i data-feather='user-plus'></i>
                     </button>
                 </div>
-                <div class="card body">
+                <div class="card-body">
                     <table id="users-table" class="datatables-basic table">
                         <thead>
                             <tr>
