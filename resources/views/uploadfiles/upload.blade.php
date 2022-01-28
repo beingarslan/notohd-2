@@ -30,9 +30,8 @@
                         multiple files or just drop all selected files in the dropzone area. This example is the most basic setup
                         for dropzone.
                     </p> -->
-                    <form action="{{route('admin.images.store')}}" method="POST" class="dropzone dropzone-area" id="dpz-multiple-files">
+                    <form action="{{route('admin.images.store')}}" method="POST" class="dropzone dropzone-area" id="dpz-multiple-files" enctype="multipart/form-data">
                         @csrf
-                        <div class="dz-message">Drop files here or click to upload.</div>
                     </form>
                 </div>
             </div>
@@ -51,54 +50,57 @@
 @section('page-script')
 <!-- Page js files -->
 <script type="text/javascript">
+    $(document).ready(function() {
+        Dropzone.options.dropzone = {
+            maxFilesize: 12,
+            url: "{!! route('admin.images.store') !!}",
 
-    Dropzone.options.dropzone = {
-        maxFilesize: 12,
-        renameFile: function(file) {
-            var dt = new Date();
-            var time = dt.getTime();
-            return time + file.name;
-        },
-        acceptedFiles: ".jpeg,.jpg,.png",
-        addRemoveLinks: true,
-        timeout: 50000,
-        removedfile: function(file) {
-            var name = file.upload.filename;
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                },
-                type: 'POST',
-                url: '{!! route("admin.images.remove") !!}',
-                data: {
-                    filename: name
-                },
-                success: function(data) {
-                    console.log("File has been successfully removed!!");
-                },
-                error: function(e) {
-                    toastr.error("error", 'file not removed');
+            renameFile: function(file) {
+                var dt = new Date();
+                var time = dt.getTime();
+                return time + file.name;
+            },
+            acceptedFiles: ".jpeg,.jpg,.png",
+            addRemoveLinks: true,
+            timeout: 50000,
+            removedfile: function(file) {
+                var name = file.upload.filename;
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    },
+                    type: 'POST',
+                    url: '{!! route("admin.images.remove") !!}',
+                    data: {
+                        filename: name
+                    },
+                    success: function(data) {
+                        console.log("File has been successfully removed!!");
+                    },
+                    error: function(e) {
+                        toastr.error("error", 'file not removed');
 
-                    console.log(e);
-                }
-            });
-            var fileRef;
-            return (fileRef = file.previewElement) != null ?
-                fileRef.parentNode.removeChild(file.previewElement) : void 0;
-        },
+                        console.log(e);
+                    }
+                });
+                var fileRef;
+                return (fileRef = file.previewElement) != null ?
+                    fileRef.parentNode.removeChild(file.previewElement) : void 0;
+            },
 
-        success: function(file, response) {
-            toastr.success(file, response)
+            success: function(file, response) {
+                toastr.success(file, response)
 
-            console.log(response);
-        },
-        error: function(file, response) {
-            // toast error
+                console.log(response);
+            },
+            error: function(file, response) {
+                // toast error
 
-            toastr.error(response, file)
+                toastr.error(response, file)
 
-            return false;
-        }
-    };
+                return false;
+            }
+        };
+    })
 </script>
 @endsection
