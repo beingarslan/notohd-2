@@ -130,10 +130,10 @@ Route::post('/upload', function (Request $request) {
     // if($request)
     $file = $request->file('image');
     // upload in S3
-    // $path = Storage::disk('Wasabi')->putFileAs('/notohd', $file, 'public');
+    $path = Storage::disk('Wasabi')->putFileAs('/notohd', $file, 'public');
 
     // // get image url
-    // $url = Storage::disk('Wasabi')->url($path);
+    $url = Storage::disk('Wasabi')->url($path);
 
 
     // $image = (file_get_contents($request->file('image')));
@@ -144,7 +144,7 @@ Route::post('/upload', function (Request $request) {
     $client = new ImageAnnotatorClient();
     // Annotate an image, detecting faces.
     $annotation = $client->annotateImage(
-        file_get_contents($file),
+        $url,
         [Type::LABEL_DETECTION]
     );
 
