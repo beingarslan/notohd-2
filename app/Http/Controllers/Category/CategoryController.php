@@ -43,7 +43,7 @@ class CategoryController extends Controller
                 ->orWhere('description', 'LIKE', "%{$search}%")
                 ->orWhere('status', 'LIKE', "%{$search}%")
                 ->leftJoin('categories', 'parent_id', 'categories.id')
-                ->offset($start) 
+                ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->with(['parent', 'child'])
@@ -82,7 +82,8 @@ class CategoryController extends Controller
     }
 
     // save category info
-    public function save(Request $request){
+    public function save(Request $request)
+    {
         $validated = Validator::make($request->all(), [
             'title' => 'required|max:255',
             'description' => 'required',
