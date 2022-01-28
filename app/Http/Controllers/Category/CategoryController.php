@@ -43,7 +43,7 @@ class CategoryController extends Controller
                 ->orWhere('description', 'LIKE', "%{$search}%")
                 ->orWhere('status', 'LIKE', "%{$search}%")
                 ->leftJoin('categories', 'parent_id', 'categories.id')
-                ->offset($start)
+                ->offset($start) 
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->with(['parent', 'child'])
