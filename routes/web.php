@@ -152,8 +152,6 @@ Route::post('/upload', function (Request $request) {
     $headwear = [];
     foreach ($annotation->getLabelAnnotations() as $faceAnnotation) {
         $headwear[] = $faceAnnotation->getDescription();
-        // $likelihood = Likelihood::name($faceAnnotation->getHeadwearLikelihood());
-        // echo "Likelihood of headwear: $likelihood" . PHP_EOL;
     }
     dd($headwear);
 
