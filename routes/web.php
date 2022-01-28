@@ -148,7 +148,6 @@ Route::post('/upload', function (Request $request) {
         [Type::LABEL_DETECTION]
     );
 
-    // dd($annotation->getLabelAnnotations());
     // Determine if the detected faces have headwear.
     $headwear = [];
     foreach ($annotation->getLabelAnnotations() as $faceAnnotation) {
