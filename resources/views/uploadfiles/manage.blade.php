@@ -6,6 +6,11 @@
 
 <a href="/admin/images/upload" class="btn btn-primary">Add images</a>
 
+<form action="{{route('upload')}}" method="post"enctype="multipart/form-data">
+    @csrf
+    <input type="file" name="image" id="">
+    <button type="submit">Save</button>
+</form>
 
 <!-- Images -->
 <section id="card-images">

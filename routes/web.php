@@ -6,7 +6,17 @@ use App\Http\Controllers\UploadFile\UploadFileController;
 use App\Http\Controllers\User\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+
+use Google\Cloud\Vision\V1\Feature\Type;
+use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+use Google\Cloud\Vision\V1\Likelihood;
+
+
+use Google\Cloud\Vision\Image;
+
 
 
 Route::get('/', function () {
@@ -63,7 +73,7 @@ Route::group(
                         'prefix' => 'categories',
                         'as' => 'categories.'
                     ],
-                    function(){
+                    function () {
                         Route::get('/manage', [CategoryController::class, 'manage'])->name('manage');
                         Route::get('/categories', [CategoryController::class, 'categories'])->name('categories');
                         Route::post('/save', [CategoryController::class, 'save'])->name('save');
@@ -78,7 +88,7 @@ Route::group(
                         'prefix' => 'images',
                         'as' => 'images.'
                     ],
-                    function(){
+                    function () {
                         Route::get('/manage', [UploadFileController::class, 'manage'])->name('manage');
                         Route::get('/upload', [UploadFileController::class, 'upload'])->name('upload');
                         Route::get('/images', [UploadFileController::class, 'images'])->name('images');
@@ -96,7 +106,7 @@ Route::group(
     [
         'middleware' => 'auth'
     ],
-    function(){
+    function () {
         Route::post('/upload/image', [ImageFileController::class, 'uploadImage'])->name('upload.image');
     }
 );
@@ -116,15 +126,44 @@ Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
 Auth::routes();
 
-// Route::post('/upload', function(Request $request){
-//     $file = $request->file('file');
-//     // upload in S3
-//     $path = Storage::disk('Wasabi')->put('/notohd', $file, 'private');
+Route::post('/upload', function (Request $request) {
+    // if($request)
+    $file = $request->file('image');
+    // upload in S3
+    // $path = Storage::disk('Wasabi')->putFileAs('/notohd', $file, 'public');
 
-// echo $path;
+    // // get image url
+    // $url = Storage::disk('Wasabi')->url($path);
 
-//     // return response()->json(['location' => '/images/' . $name]);
-// })->name('upload');
+
+    // $image = (file_get_contents($request->file('image')));
+
+    // $json_file = file_get_contents(asset('challengestreamer-a6101121eefc.json'));
+    putenv("GOOGLE_APPLICATION_CREDENTIALS=challengestreamer-a6101121eefc.json");
+
+    $client = new ImageAnnotatorClient();
+    // Annotate an image, detecting faces.
+    $annotation = $client->annotateImage(
+        file_get_contents($file),
+        [Type::LABEL_DETECTION]
+    );
+
+    // dd($annotation->getLabelAnnotations());
+    // Determine if the detected faces have headwear.
+    $headwear = [];
+    foreach ($annotation->getLabelAnnotations() as $faceAnnotation) {
+        $headwear[] = $faceAnnotation->getDescription();
+        // $likelihood = Likelihood::name($faceAnnotation->getHeadwearLikelihood());
+        // echo "Likelihood of headwear: $likelihood" . PHP_EOL;
+    }
+    dd($headwear);
+
+
+
+    // return response()->json(['location' => '/images/' . $name]);
+})->name('upload');
+
+
 
 
 

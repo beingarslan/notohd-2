@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "challengestreamer",
+  "private_key_id": "a6101121eefcb3e9790ad7427001b579471f817a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCYGP6jKEw/Wgrp\nLmpr8LcE2ud5aDfwjZCjOk9ylIK4RcVzEoGFXMCkkEjq9FPL/uJJrutq7CrzS4De\ngaS3XwYULaXaA2uOpkqF8AMt74Y7LjT+RUWmp/EWJ2a0KUQq24iLg97Ibb0pkEb7\n04+9Z617mysdZEoyBpow22sfhOrEf8lweU1xSDyuHl90PseIpwXK8HizvEWshDgA\nl+mPjCwgN3hcKcsuXsPAVXyGsF6jqPYVZoFvMaYHodJ45jLLUltN+21zzUXXOm3h\nNxCX3yBWvMLhX17Wv1KxlVEgODIG0HOJXVmkxOXVKKR8WV/vCC1T31KLUVyNdh5J\nQJ1QldyvAgMBAAECggEAARUodtvaExdefYNtkYAgpWGzhRs3TriLP4YyO5QQDCS+\n/48xqdPbsTAvvLBpikmxramXlmbA9YNjkvHkTMPZ5LngdNlSYi0P2b04IJMUZwZw\nrSCsGsAWSLyWEBE9IXr3kVqqcs3JK2sR/kfmvYfn5bnYiDiHCK0gWtms/Qfyrdxi\nL0J26u8Ybuapk616OSvdE0bMsED5VteFu+nLlswQk+ZntI+lgp2iC8CGdBDF+gHT\ntUbUOauc6q/IqwXjQguHWHEH/+ONvmeYiTqW9n2pyWFQEaICUQw6PLFYiuFjNWjI\ndU1sJY1V+WsxO/skPAxrqX+GL/XWq8K29XZBHK1WOQKBgQDTsXhe1heI8Gcd+D+c\nU9qk9q3jMtST1zT/OHuQcE0ABIXYZKyNVnJl1xJhT1aScmagFGzYueV7QVeoC0UR\nUeM9GXmwU6gwidT1jo1/eyxNhI9a6mm3I9TNNQn9pAeTrSogY3UCvNYK4k0awf5a\naxj0hx0g9EVeOQSTl4ZcXDAMCQKBgQC37mPjI0cABY1Jh322yTE3Uf8a0yGJ38/d\nuLqqkDVc98JN8c74AY0RJZZn/m3N9Y0f5LF+ulNA1dHKf/uF74k+mUX0mEuy0kk9\ns3NodYeXzgHOnTF/m5G9OuvHsxrktDNuQ+GB/4okWAODmKyrachrDoIpF7f1xQDs\njWRUv3hA9wKBgEPEqHgTqW0ZKKmbcyGkZnYw0fHNr+e0GS8q8cOHb971k7N2ZxbH\n+c9IToYAVAKFxPyyDTZELIaMoHcXRIEK6egBY8diwJDpTtddT0bkM4aNTScZq8YJ\nHnKi7BPakuJfqQC9VhQOR6csUuqh978SUebV6ilGiX5kWma1NzoR+P+hAoGAX9zK\niL6BKby7B6CrX9H6abe9utBhgYd5wjieaXkhpuOmjJND6LR+PnqVqnvL5PVe6Ul7\nTO51p6wJXH5ZrFPM9yhRcorRoVDCRXs64i2nTvJatMHu43BEhBiqfHmXwa09xPFy\nHhv+drS8mCDBldFbWJjGM/6drWVQ9vk2Wok0dr8CgYEAjXAeq9cD7614jjRaI/iK\nnMmg+gds3xMaWZdtCnhS8B3YsRAby0YEnZexjQ/+IIEiicZcj+zi37UjqNqWin0+\nHV8ak9qyvNsMRZbP0GEFAh66SLtLeRGA1dFLCoxeIj1Ch+KzwcUMyfDu9JePJej2\ngwxZSGhS/RjicsGeJMflrHY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "notohd@challengestreamer.iam.gserviceaccount.com",
+  "client_id": "115301111259982914156",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/notohd%40challengestreamer.iam.gserviceaccount.com"
+}
