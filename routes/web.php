@@ -130,9 +130,11 @@ Route::post('/upload', function (Request $request) {
     // if($request)
     $file = $request->file('image');
     // upload in S3
-    $path = Storage::disk('Wasabi')->putFileAs('/notohd', $file, 'public');
+    $path = Storage::disk('Wasabi')->put('/notohd', $file, 'public');
+    dump($path);
 
     // // get image url
+
     $url = Storage::disk('Wasabi')->url($path);
 
 
@@ -141,6 +143,7 @@ Route::post('/upload', function (Request $request) {
     // $json_file = file_get_contents(asset('challengestreamer-a6101121eefc.json'));
     putenv("GOOGLE_APPLICATION_CREDENTIALS=challengestreamer-a6101121eefc.json");
 
+    dump($url);
     $client = new ImageAnnotatorClient();
     // Annotate an image, detecting faces.
     $annotation = $client->annotateImage(
@@ -153,6 +156,7 @@ Route::post('/upload', function (Request $request) {
     foreach ($annotation->getLabelAnnotations() as $faceAnnotation) {
         $headwear[] = $faceAnnotation->getDescription();
     }
+
     dd($headwear);
 
 

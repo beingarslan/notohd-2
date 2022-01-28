@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
+use Google\Cloud\Vision\V1\Feature\Type;
+use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 
 class UploadFileController extends Controller
 {
@@ -49,9 +51,21 @@ class UploadFileController extends Controller
         // store file
         $path = Storage::disk('Wasabi')->putFileAs('uploads', $image, $imageName, 'public');
 
+        putenv("GOOGLE_APPLICATION_CREDENTIALS=challengestreamer-a6101121eefc.json");
+        $client = new ImageAnnotatorClient();
+        $annotation = $client->annotateImage(
+            Storage::disk('Wasabi')->url($path),
+            [Type::LABEL_DETECTION]
+        );
+        $tags = [];
+        foreach ($annotation->getLabelAnnotations() as $faceAnnotation) {
+            $tags[] = $faceAnnotation->getDescription();
+        }
         $imageUpload = new UploadFile();
         $imageUpload->filename = $path;
+        $imageUpload->tags = json_encode($tags);
         $imageUpload->save();
+
         return response()->json(['success' => $imageName]);
     }
 
