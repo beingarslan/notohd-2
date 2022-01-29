@@ -10,6 +10,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
 use Google\Cloud\Vision\V1\Feature\Type;
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+use Image;
 
 class UploadFileController extends Controller
 {
@@ -51,6 +52,9 @@ class UploadFileController extends Controller
         // store file
         $path = Storage::disk('Wasabi')->putFileAs('uploads', $image, $imageName, 'public');
 
+        $thumbnail = Image::make($image->getRealPath())->resize(300, 200);
+        $thumbnail_path = Storage::disk('Wasabi')->putFileAs('uploads', $thumbnail, 'thumbnail_'.$imageName, 'public');
+
         putenv("GOOGLE_APPLICATION_CREDENTIALS=challengestreamer-a6101121eefc.json");
         $client = new ImageAnnotatorClient();
         $annotation = $client->annotateImage(
@@ -61,8 +65,10 @@ class UploadFileController extends Controller
         foreach ($annotation->getLabelAnnotations() as $faceAnnotation) {
             $tags[] = $faceAnnotation->getDescription();
         }
+
         $imageUpload = new UploadFile();
         $imageUpload->filename = $path;
+        $imageUpload->thumbnail = $thumbnail_path;
         $imageUpload->tags = json_encode($tags);
         $imageUpload->save();
 

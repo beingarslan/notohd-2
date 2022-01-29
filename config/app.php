@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         // custom theme menu provider
         App\Providers\MenuServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -229,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // custom theme helper
         'Helper' => App\Helpers\Helper::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];
