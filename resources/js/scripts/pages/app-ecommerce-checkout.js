@@ -11,8 +11,8 @@ $(function () {
   'use strict';
 
   var quantityCounter = $('.quantity-counter'),
-    CounterMin = 1,
-    CounterMax = 10,
+    CounterMin = 0,
+    CounterMax = 1000,
     bsStepper = document.querySelectorAll('.bs-stepper'),
     checkoutWizard = document.querySelector('.checkout-tab-steps'),
     removeItem = $('.remove-wishlist'),

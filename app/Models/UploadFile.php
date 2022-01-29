@@ -12,6 +12,7 @@ class UploadFile extends Model
 
     protected $fillable = [
         'id',
+        'price',
         'filename',
         'thumbnail',
         'tags',

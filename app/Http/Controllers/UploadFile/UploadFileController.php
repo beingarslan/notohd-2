@@ -76,7 +76,7 @@ class UploadFileController extends Controller
 
         $imageUpload = new UploadFile();
         $imageUpload->filename = $path;
-        $imageUpload->thumbnail =  \Thumbnail::src($fileUrl)->smartcrop(150, 150)->url(true);
+        $imageUpload->thumbnail =  \Thumbnail::src($fileUrl)->smartcrop(350, 250)->url(true);
         $imageUpload->tags = json_encode($tags);
         $imageUpload->save();
 
