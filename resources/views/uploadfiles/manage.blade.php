@@ -93,7 +93,7 @@
                             <span class="quantity-title">Set Price:</span>
                             <div class="quantity-counter-wrapper">
                                 <div class="input-group">
-                                    <input type="text" class="quantity-counter" name="price{{ $image->id }}" value="{{ ($image->price) }}" />
+                                    <input type="text" class="quantity-counter price" name="price{{ $image->id }}" value="{{ ($image->price) }}" />
                                 </div>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                             <i data-feather="x" class="align-middle me-25"></i>
                             <span class="remove{{ ($image->id) }}">Remove</span>
                         </button>
-                        <button type="button" class="btn btn-primary btn-cart update">
+                        <button type="button" value="{{ ($image->id) }}" class="btn btn-primary btn-cart update">
                             <!-- <i data-feather="heart" class="align-middle me-25"></i> -->
                             <span class="text-truncate">Update</span>
                         </button>

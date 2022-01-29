@@ -29,12 +29,13 @@ $(function () {
     // update
     update.on('click', function () {
         $(this).text('Updating...');
+        console.log($(this).closest('.price').val());
         $.ajax({
             type: 'POST',
-            url: '/update',
+            url: '/admin/images/update',
             data: {
-                id: $(this).data('id'),
-                price: $(this).closest('.quantity-counter').find('.quantity').val()
+                id: $(this).val(),
+                price: $(this).closest('.price').val()
             },
             success: function (data) {
                 if (data.status == 'success') {
@@ -55,6 +56,8 @@ $(function () {
                 }
             }
         });
+        // $(this).text('Update');
+
     });
     // remove items from wishlist page
     removeItem.on('click', function () {

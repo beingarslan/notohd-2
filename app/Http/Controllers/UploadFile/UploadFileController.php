@@ -113,12 +113,27 @@ class UploadFileController extends Controller
             //throw $th;
             return response()->json(['error' => $th->getMessage()]);
         }
+    }
 
-        // $filename =  $request->get('filename');
-        // UploadFile::where('filename',$filename)->delete();
-        // // remove file
-        // Storage::disk('Wasabi')->delete('uploads/' . $filename);
+    public function update(Request $request){
+        try {
+            $id =  $request->get('id');
+            $update = UploadFile::where('id', $id)->update([
+                'price' => $request->input('price')
+            ]);
 
-        // return $filename;
+            return response()->json([
+                'status' => 'success',
+                'message' => 'File updated successfully',
+                'id' => $request->input('id'),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['error' => $th->getMessage()]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }
