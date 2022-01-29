@@ -29,13 +29,12 @@ $(function () {
     // update
     update.on('click', function () {
         $(this).text('Updating...');
-        console.log($(this).closest('.price').val());
         $.ajax({
             type: 'POST',
             url: '/admin/images/update',
             data: {
                 id: $(this).val(),
-                price: $(this).closest('.price').val()
+                price: $('#price' + $(this).val()).val()
             },
             success: function (data) {
                 if (data.status == 'success') {
@@ -44,7 +43,6 @@ $(function () {
                         tapToDismiss: false,
                         rtl: isRtl
                     });
-                    $(this).text('Update');
                 }
                 else {
                     toastr['error']('', 'Error', {
@@ -52,11 +50,10 @@ $(function () {
                         tapToDismiss: false,
                         rtl: isRtl
                     });
-                    $(this).text('Update');
                 }
             }
         });
-        // $(this).text('Update');
+        $(this).text('Update');
 
     });
     // remove items from wishlist page

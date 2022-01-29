@@ -93,7 +93,7 @@
                             <span class="quantity-title">Set Price:</span>
                             <div class="quantity-counter-wrapper">
                                 <div class="input-group">
-                                    <input type="text" class="quantity-counter price" name="price{{ $image->id }}" value="{{ ($image->price) }}" />
+                                    <input type="text" class="quantity-counter price" id="price{{ $image->id }}" value="{{ ($image->price) }}" />
                                 </div>
                             </div>
                         </div>
