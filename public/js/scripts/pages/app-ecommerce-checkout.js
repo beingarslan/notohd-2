@@ -18,16 +18,47 @@ $(function () {
         bsStepper = document.querySelectorAll('.bs-stepper'),
         checkoutWizard = document.querySelector('.checkout-tab-steps'),
         removeItem = $('.remove-wishlist'),
-        moveToCart = $('.move-cart'),
+        update = $('.update'),
         isRtl = $('html').attr('data-textdirection') === 'rtl';
 
-    // remove items from wishlist page
-    removeItem.on('click', function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    // update
+    update.on('click', function () {
+        $(this).text('Updating...');
+        $.ajax({
+            type: 'POST',
+            url: '/update',
+            data: {
+                id: $(this).data('id'),
+                price: $(this).closest('.quantity-counter').find('.quantity').val()
+            },
+            success: function (data) {
+                if (data.status == 'success') {
+                    toastr['success']('', 'Updated', {
+                        closeButton: true,
+                        tapToDismiss: false,
+                        rtl: isRtl
+                    });
+                    $(this).text('Update');
+                }
+                else {
+                    toastr['error']('', 'Error', {
+                        closeButton: true,
+                        tapToDismiss: false,
+                        rtl: isRtl
+                    });
+                    $(this).text('Update');
+                }
             }
         });
+    });
+    // remove items from wishlist page
+    removeItem.on('click', function () {
+
         // add loading
         $(this).text('Removing...');
 
@@ -64,14 +95,7 @@ $(function () {
     });
 
     // move items to cart
-    moveToCart.on('click', function () {
-        $(this).closest('.ecommerce-card').remove();
-        toastr['success']('', 'Added to wishlist ❤️', {
-            closeButton: true,
-            tapToDismiss: false,
-            rtl: isRtl
-        });
-    });
+
 
     // Checkout Wizard
 

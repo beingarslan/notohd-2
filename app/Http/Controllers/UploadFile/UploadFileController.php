@@ -96,10 +96,12 @@ class UploadFileController extends Controller
     public function removefile(Request $request)
     {
         try {
-            $filename =  $request->get('filename');
-            UploadFile::where('filename', $filename)->delete();
+            $id =  $request->get('id');
+            $uploadFile = UploadFile::where('id', $id)->first();
             // remove file
-            Storage::disk('Wasabi')->delete('uploads/' . $filename);
+            Storage::disk('Wasabi')->delete($uploadFile->filename);
+            $uploadFile->delete();
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'File removed successfully',

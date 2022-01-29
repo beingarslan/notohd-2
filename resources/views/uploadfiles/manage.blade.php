@@ -78,7 +78,7 @@
             <div class="checkout-items">
                 @foreach($images as $image)
                 <div class="card ecommerce-card" id="image{{ ($image->id) }}">
-                    <div class="item-img">
+                    <div class="item-img ms-1">
                         <a href="#{{url('app/ecommerce/details')}}">
                             <img src="{{$image->thumbnail}}" alt="img-placeholder" />
                         </a>
@@ -93,7 +93,7 @@
                             <span class="quantity-title">Set Price:</span>
                             <div class="quantity-counter-wrapper">
                                 <div class="input-group">
-                                    <input type="text" class="quantity-counter" value="{{ ($image->price) }}" />
+                                    <input type="text" class="quantity-counter" name="price{{ $image->id }}" value="{{ ($image->price) }}" />
                                 </div>
                             </div>
                         </div>
@@ -106,9 +106,9 @@
                             <i data-feather="x" class="align-middle me-25"></i>
                             <span class="remove{{ ($image->id) }}">Remove</span>
                         </button>
-                        <button type="button" class="btn btn-primary btn-cart move-cart">
-                            <i data-feather="heart" class="align-middle me-25"></i>
-                            <span class="text-truncate">Add to Wishlist</span>
+                        <button type="button" class="btn btn-primary btn-cart update">
+                            <!-- <i data-feather="heart" class="align-middle me-25"></i> -->
+                            <span class="text-truncate">Update</span>
                         </button>
                     </div>
                 </div>
