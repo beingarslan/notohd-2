@@ -77,18 +77,18 @@
             <!-- Checkout Place Order Left starts -->
             <div class="checkout-items">
                 @foreach($images as $image)
-                <div class="card ecommerce-card">
+                <div class="card ecommerce-card" id="image{{ ($image->id) }}">
                     <div class="item-img">
                         <a href="#{{url('app/ecommerce/details')}}">
                             <img src="{{$image->thumbnail}}" alt="img-placeholder" />
                         </a>
                     </div>
                     <div class="card-body">
-                        <div class="item-name">
+                        <!-- <div class="item-name">
                             <h6 class="mb-0"><a href="{{url('app/ecommerce/details')}}" class="text-body">Apple Watch Series 5</a></h6>
                             <span class="item-company">By <a href="#" class="company-name">Apple</a></span>
                         </div>
-                        <span class="text-success mb-1">In Stock</span>
+                        <span class="text-success mb-1">In Stock</span> -->
                         <div class="item-quantity">
                             <span class="quantity-title">Set Price:</span>
                             <div class="quantity-counter-wrapper">
@@ -98,21 +98,13 @@
                             </div>
                         </div>
                         <input type="text" id="inputTag" class="form-control inputTag" value="{{ ($image->tags) }}" data-role="tagsinput">
-                        <span class="delivery-date text-muted">Delivery by, Wed Apr 25</span>
-                        <span class="text-success">17% off 4 offers Available</span>
+                        <!-- <span class="delivery-date text-muted">Delivery by, Wed Apr 25</span>
+                        <span class="text-success">17% off 4 offers Available</span> -->
                     </div>
                     <div class="item-options text-center">
-                        <div class="item-wrapper">
-                            <div class="item-cost">
-                                <h4 class="item-price">$19.99</h4>
-                                <p class="card-text shipping">
-                                    <span class="badge rounded-pill badge-light-success">Free Shipping</span>
-                                </p>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-light mt-1 remove-wishlist">
+                        <button type="button" id="{{ ($image->id) }}" class="btn btn-light mt-1 remove-wishlist">
                             <i data-feather="x" class="align-middle me-25"></i>
-                            <span>Remove</span>
+                            <span class="remove{{ ($image->id) }}">Remove</span>
                         </button>
                         <button type="button" class="btn btn-primary btn-cart move-cart">
                             <i data-feather="heart" class="align-middle me-25"></i>

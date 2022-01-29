@@ -93,6 +93,7 @@ Route::group(
                         Route::post('/store', [UploadFileController::class, 'store'])->name('store');
                         Route::get('/edit/{id}', [UploadFileController::class, 'edit'])->name('edit');
                         Route::post('/remove', [UploadFileController::class, 'remove'])->name('remove');
+                        Route::post('/remove/file', [UploadFileController::class, 'removefile'])->name('remove.file');
                     }
                 );
             }

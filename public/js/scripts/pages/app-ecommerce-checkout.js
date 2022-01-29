@@ -7,7 +7,7 @@
     Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 
-const { ajax } = require("jquery");
+// const { ajax } = require("jquery");
 
 $(function () {
     'use strict';
@@ -23,12 +23,20 @@ $(function () {
 
     // remove items from wishlist page
     removeItem.on('click', function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        // add loading
+        $(this).text('Removing...');
+
         // ajax
         $.ajax({
-            url: '/wishlist/remove',
+            url: '/admin/images/remove/file',
             type: 'POST',
             data: {
-                id: $(this).data('id')
+                id: $(this).attr('id')
             },
             success: function (data) {
                 if (data.status == 'success') {
@@ -37,7 +45,7 @@ $(function () {
                         tapToDismiss: false,
                         rtl: isRtl
                     });
-                    $('.ecommerce-card[data-id="' + data.id + '"]').remove();
+                    $('#image' + data.id + '').remove();
                 } else {
                     toastr['error']('', 'Error 🙁', {  // eslint-disable-line no-undef
                         closeButton: true,

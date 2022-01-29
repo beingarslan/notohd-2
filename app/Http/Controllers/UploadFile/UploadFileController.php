@@ -22,7 +22,7 @@ class UploadFileController extends Controller
         // paginatation
         $images = UploadFile::paginate(12);
         foreach ($images as $image) {
-            $image->tags = str_replace(array( '[', ']', '"' ), '',$image->tags);
+            $image->tags = str_replace(array('[', ']', '"'), '', $image->tags);
         }
         return view('uploadfiles.manage', [
             'images' => $images,
@@ -86,11 +86,37 @@ class UploadFileController extends Controller
     public function remove(Request $request)
     {
         $filename =  $request->get('filename');
-        UploadFile::where('filename',$filename)->delete();
+        UploadFile::where('filename', $filename)->delete();
         // remove file
         Storage::disk('Wasabi')->delete('uploads/' . $filename);
 
         return $filename;
     }
 
+    public function removefile(Request $request)
+    {
+        try {
+            $filename =  $request->get('filename');
+            UploadFile::where('filename', $filename)->delete();
+            // remove file
+            Storage::disk('Wasabi')->delete('uploads/' . $filename);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'File removed successfully',
+                'id' => $request->input('id'),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['error' => $th->getMessage()]);
+        }
+
+        // $filename =  $request->get('filename');
+        // UploadFile::where('filename',$filename)->delete();
+        // // remove file
+        // Storage::disk('Wasabi')->delete('uploads/' . $filename);
+
+        // return $filename;
+    }
 }
