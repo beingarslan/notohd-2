@@ -19,7 +19,7 @@
         @foreach($images as $image)
         <div class="col-md-3 col-xl-3">
             <div class="card mb-3">
-                <img class="card-img-top lazy" src="{{$image->path}}" alt="Card image cap" />
+                <img class="card-img-top lazy" src="{{$image->thumbnail}}" alt="Card image cap" />
                 <div class="card-body">
                     <!-- <p class="card-text">
             This is a wider card with supporting text below as a natural lead-in to additional content. This content is

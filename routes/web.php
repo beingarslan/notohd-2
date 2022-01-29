@@ -15,8 +15,6 @@ use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Cloud\Vision\V1\Likelihood;
 
 
-use Google\Cloud\Vision\Image;
-
 
 
 Route::get('/', function () {
@@ -129,36 +127,37 @@ Auth::routes();
 Route::post('/upload', function (Request $request) {
     // if($request)
     $file = $request->file('image');
-    // upload in S3
-    $path = Storage::disk('Wasabi')->put('/notohd', $file, 'public');
-    dump($path);
+    // // upload in S3
+    // $path = Storage::disk('Wasabi')->put('/notohd', $file, 'public');
+    // dump($path);
 
-    // // get image url
+    // // // get image url
 
-    $url = Storage::disk('Wasabi')->url($path);
+    // $url = Storage::disk('public')->url($path);
 
 
-    // $image = (file_get_contents($request->file('image')));
 
-    // $json_file = file_get_contents(asset('challengestreamer-a6101121eefc.json'));
-    putenv("GOOGLE_APPLICATION_CREDENTIALS=challengestreamer-a6101121eefc.json");
+    // dump($request->file('image'));
 
-    dump($url);
-    $client = new ImageAnnotatorClient();
-    // Annotate an image, detecting faces.
-    $annotation = $client->annotateImage(
-        $url,
-        [Type::LABEL_DETECTION]
-    );
+    // $url= (\Thumbnail::src($url)->crop(64, 64)->url());
+    // echo "<img src='$url' />";
+    // ;
+    $url = 'https://s3.us-west-1.wasabisys.com/notohd/notohd/FEAxFpYszkLisfrbTQOJ125zMAn86IUDq664asHA.png';
+    $path = \Thumbnail::src($url)->smartcrop(64, 64)->url(true);
+    echo ($path);
+    // $img = Image::make($request->file('image'));
+    // dd($img);
+    // $thumbnail = $img->resize(300, 200);
+    // $path = Storage::disk('Wasabi')->put('/thumbnail', $thumbnail, 'public');
+    // // $image = (file_get_contents($request->file('image')));
 
-    // Determine if the detected faces have headwear.
-    $headwear = [];
-    foreach ($annotation->getLabelAnnotations() as $faceAnnotation) {
-        $headwear[] = $faceAnnotation->getDescription();
-    }
+    // // $json_file = file_get_contents(asset('challengestreamer-a6101121eefc.json'));
+    // putenv("GOOGLE_APPLICATION_CREDENTIALS=challengestreamer-a6101121eefc.json");
+    // $url = Storage::disk('Wasabi')->url($path);
 
-    dd($headwear);
+    // dump($url);
 
+    // echo "<img src='$thumbnail' />";
 
 
     // return response()->json(['location' => '/images/' . $name]);

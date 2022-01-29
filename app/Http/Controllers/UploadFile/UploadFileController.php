@@ -52,13 +52,13 @@ class UploadFileController extends Controller
         // store file
         $path = Storage::disk('Wasabi')->putFileAs('uploads', $image, $imageName, 'public');
 
-        $thumbnail = Image::make($image->getRealPath())->resize(300, 200);
-        $thumbnail_path = Storage::disk('Wasabi')->putFileAs('uploads', $thumbnail, 'thumbnail_'.$imageName, 'public');
+        // get file url
+        $fileUrl = Storage::disk('Wasabi')->url($path);
 
         putenv("GOOGLE_APPLICATION_CREDENTIALS=challengestreamer-a6101121eefc.json");
         $client = new ImageAnnotatorClient();
         $annotation = $client->annotateImage(
-            Storage::disk('Wasabi')->url($path),
+            $fileUrl,
             [Type::LABEL_DETECTION]
         );
         $tags = [];
@@ -68,7 +68,7 @@ class UploadFileController extends Controller
 
         $imageUpload = new UploadFile();
         $imageUpload->filename = $path;
-        $imageUpload->thumbnail = $thumbnail_path;
+        $imageUpload->thumbnail =  \Thumbnail::src($fileUrl)->smartcrop(150, 150)->url(true);
         $imageUpload->tags = json_encode($tags);
         $imageUpload->save();
 
