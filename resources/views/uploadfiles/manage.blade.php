@@ -1,8 +1,21 @@
 @extends('layouts/contentLayoutMaster')
 
-@section('title', 'Gallery')
+@section('title', 'Images')
 
 @section('vendor-style')
+<!-- Vendor css files -->
+<link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/wizard/bs-stepper.min.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/spinner/jquery.bootstrap-touchspin.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
+@endsection
+
+@section('page-style')
+<!-- Page css files -->
+<link rel="stylesheet" href="{{ asset(mix('css/base/pages/app-ecommerce.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/pickers/form-pickadate.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-wizard.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/extensions/ext-component-toastr.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('css/base/plugins/forms/form-number-input.css')) }}">
 <link rel="stylesheet" type="text/css" href="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
 
 <style>
@@ -20,12 +33,12 @@
         border: 1px solid #ccc;
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
         display: block;
-        padding: 10px 6px;
+        padding: 2px 2px;
         color: #555;
         vertical-align: middle;
         border-radius: 4px;
         max-width: 100%;
-        line-height: 22px;
+        /* line-height: 22px; */
         cursor: text;
     }
 
@@ -50,59 +63,139 @@
     }
 </style>
 @endsection
+
 @section('content')
+<div class="bs-stepper checkout-tab-steps">
 
-<a href="/admin/images/upload" class="btn btn-primary">Add images</a>
-
-<!-- <form action="{{route('upload')}}" method="post"enctype="multipart/form-data">
-    @csrf
-    <input type="file" name="image" id="">
-    <button type="submit">Save</button>
-</form> -->
-
-<!-- Images -->
-<section id="card-images">
-    <h5 class="mt-3 mb-2">Images</h5>
-    <div class="row">
-        @foreach($images as $image)
-        <div class="col-lg-4 col-md-6 col-12">
-            <div class="card card-apply-job">
-                <img class="card-img-top lazy" src="{{$image->thumbnail}}" alt="Card image cap" />
-
-                <div class="card-body">
-
-
-                    <div class="d-grid">
-                        <div class="form-group mb-1">
-                            <label for="">Tags Input</label>
-                            <input type="text" id="inputTag" class="form-control inputTag" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput">
-                        </div>
+    <div class="bs-stepper-content">
+        <div id="place-order" class="list-view product-checkout">
+            <!-- Checkout Place Order Left starts -->
+            <div class="checkout-items">
+                @foreach($images as $image)
+                <div class="card ecommerce-card">
+                    <div class="item-img">
+                        <a href="#{{url('app/ecommerce/details')}}">
+                            <img src="{{$image->thumbnail}}" alt="img-placeholder" />
+                        </a>
                     </div>
-                    <div class="d-grid">
-                        <button type="button" class="btn btn-primary">Apply For This Job</button>
+                    <div class="card-body">
+                        <div class="item-name">
+                            <h6 class="mb-0"><a href="{{url('app/ecommerce/details')}}" class="text-body">Apple Watch Series 5</a></h6>
+                            <span class="item-company">By <a href="#" class="company-name">Apple</a></span>
+                            <div class="item-rating">
+                                <ul class="unstyled-list list-inline">
+                                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                                    <li class="ratings-list-item"><i data-feather="star" class="filled-star"></i></li>
+                                    <li class="ratings-list-item"><i data-feather="star" class="unfilled-star"></i></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <span class="text-success mb-1">In Stock</span>
+                        <div class="item-quantity">
+                            <span class="quantity-title">Qty:</span>
+                            <div class="quantity-counter-wrapper">
+                                <div class="input-group">
+                                    <input type="text" class="quantity-counter" value="1" />
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" id="inputTag" class="form-control inputTag" value="{{ ($image->tags) }}" data-role="tagsinput">
+                        <span class="delivery-date text-muted">Delivery by, Wed Apr 25</span>
+                        <span class="text-success">17% off 4 offers Available</span>
+                    </div>
+                    <div class="item-options text-center">
+                        <div class="item-wrapper">
+                            <div class="item-cost">
+                                <h4 class="item-price">$19.99</h4>
+                                <p class="card-text shipping">
+                                    <span class="badge rounded-pill badge-light-success">Free Shipping</span>
+                                </p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-light mt-1 remove-wishlist">
+                            <i data-feather="x" class="align-middle me-25"></i>
+                            <span>Remove</span>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-cart move-cart">
+                            <i data-feather="heart" class="align-middle me-25"></i>
+                            <span class="text-truncate">Add to Wishlist</span>
+                        </button>
                     </div>
                 </div>
+                @endforeach
+                <div class="mb-3">
+                {{ $images->links() }}
+                </div>
+            </div>
+            <!-- Checkout Place Order Left ends -->
+
+            <!-- Checkout Place Order Right starts -->
+            <div class="checkout-options">
+                <div class="card">
+                    <div class="card-body">
+                        <label class="section-label form-label mb-1">Options</label>
+                        <div class="coupons input-group input-group-merge">
+                            <input type="text" class="form-control" placeholder="Coupons" aria-label="Coupons" aria-describedby="input-coupons" />
+                            <span class="input-group-text text-primary ps-1" id="input-coupons">Apply</span>
+                        </div>
+                        <hr />
+                        <div class="price-details">
+                            <h6 class="price-title">Price Details</h6>
+                            <ul class="list-unstyled">
+                                <li class="price-detail">
+                                    <div class="detail-title">Total MRP</div>
+                                    <div class="detail-amt">$598</div>
+                                </li>
+                                <li class="price-detail">
+                                    <div class="detail-title">Bag Discount</div>
+                                    <div class="detail-amt discount-amt text-success">-25$</div>
+                                </li>
+                                <li class="price-detail">
+                                    <div class="detail-title">Estimated Tax</div>
+                                    <div class="detail-amt">$1.3</div>
+                                </li>
+                                <li class="price-detail">
+                                    <div class="detail-title">EMI Eligibility</div>
+                                    <a href="#" class="detail-amt text-primary">Details</a>
+                                </li>
+                                <li class="price-detail">
+                                    <div class="detail-title">Delivery Charges</div>
+                                    <div class="detail-amt discount-amt text-success">Free</div>
+                                </li>
+                            </ul>
+                            <hr />
+                            <ul class="list-unstyled">
+                                <li class="price-detail">
+                                    <div class="detail-title detail-total">Total</div>
+                                    <div class="detail-amt fw-bolder">$574</div>
+                                </li>
+                            </ul>
+                            <button type="button" class="btn btn-primary w-100 btn-next place-order">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Checkout Place Order Right ends -->
             </div>
         </div>
 
-        @endforeach
-        <div class="mb-3">
-            {{ $images->links() }}
-        </div>
-
-
     </div>
-</section>
-<!--/ Images -->
+</div>
+@endsection
 
+@section('vendor-script')
+<!-- Vendor js files -->
+<script src="{{ asset(mix('vendors/js/forms/wizard/bs-stepper.min.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/forms/spinner/jquery.bootstrap-touchspin.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
 @endsection
 
 @section('page-script')
+<!-- Page js files -->
+<script src="{{ asset(mix('js/scripts/pages/app-ecommerce-checkout.js')) }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 <script src="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
-<!-- cdnjs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js" integrity="sha512-jNDtFf7qgU0eH/+Z42FG4fw3w7DM/9zbgNPe3wfJlCylVDTT3IgKW5r92Vy9IHa6U50vyMz5gRByIu4YIXFtaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 <script>
     // document ready
     $(document).ready(function() {

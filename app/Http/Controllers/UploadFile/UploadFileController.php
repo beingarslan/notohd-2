@@ -16,9 +16,17 @@ class UploadFileController extends Controller
 {
     public function manage(Request $request)
     {
+        $pageConfigs = [
+            'pageClass' => 'ecommerce-application',
+        ];
         // paginatation
+        $images = UploadFile::paginate(12);
+        foreach ($images as $image) {
+            $image->tags = str_replace(array( '[', ']', '"' ), '',$image->tags);
+        }
         return view('uploadfiles.manage', [
-            'images' => UploadFile::paginate(12)
+            'images' => $images,
+            'pageConfigs' => $pageConfigs,
         ]);
     }
 
