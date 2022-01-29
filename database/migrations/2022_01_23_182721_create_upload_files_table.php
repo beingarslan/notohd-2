@@ -18,7 +18,7 @@ class CreateUploadFilesTable extends Migration
             $table->text('filename');
             $table->text('thumbnail');
             $table->integer('price')->default(0)->nullable();
-            $table->json('tags');
+            $table->json('tags')->nullable();
             $table->timestamps();
         });
     }

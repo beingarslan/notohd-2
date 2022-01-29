@@ -118,8 +118,13 @@ class UploadFileController extends Controller
     public function update(Request $request){
         try {
             $id =  $request->get('id');
+            // string to array
+            $tags = json_encode($request->get('tags'));
+            // $tags =  $request->get('tags');
+
             $update = UploadFile::where('id', $id)->update([
-                'price' => $request->input('price')
+                'price' => $request->input('price'),
+                'tags' => ($tags),
             ]);
 
             return response()->json([

@@ -97,7 +97,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="text" id="inputTag" class="form-control inputTag" value="{{ ($image->tags) }}" data-role="tagsinput">
+                        <input type="text" id="inputTag{{ $image->id }}" class="form-control inputTag" value="{{ ($image->tags) }}" data-role="tagsinput">
                         <!-- <span class="delivery-date text-muted">Delivery by, Wed Apr 25</span>
                         <span class="text-success">17% off 4 offers Available</span> -->
                     </div>

@@ -29,12 +29,14 @@ $(function () {
     // update
     update.on('click', function () {
         $(this).text('Updating...');
+        console.log( $('#inputTag' + $(this).val()).val());
         $.ajax({
             type: 'POST',
             url: '/admin/images/update',
             data: {
                 id: $(this).val(),
-                price: $('#price' + $(this).val()).val()
+                price: $('#price' + $(this).val()).val(),
+                tags: $('#inputTag' + $(this).val()).val()
             },
             success: function (data) {
                 if (data.status == 'success') {
