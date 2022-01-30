@@ -85,6 +85,8 @@
                         </a>
                     </div>
                     <div class="card-body">
+                    @php echo $categories; @endphp
+
                         <!-- <div class="item-name">
                             <h6 class="mb-0"><a href="{{url('app/ecommerce/details')}}" class="text-body">Apple Watch Series 5</a></h6>
                             <span class="item-company">By <a href="#" class="company-name">Apple</a></span>
@@ -98,7 +100,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{$categories}}
                         <input type="text" id="inputTag{{ $image->id }}" class="form-control inputTag" value="{{ ($image->tags) }}" data-role="tagsinput">
                         <!-- <span class="delivery-date text-muted">Delivery by, Wed Apr 25</span>
                         <span class="text-success">17% off 4 offers Available</span> -->

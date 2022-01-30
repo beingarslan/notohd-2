@@ -36,12 +36,14 @@ class UploadFileController extends Controller
     public function categories_html(){
 
         $categories = Category::all();
-        $html = '<select name="category_id" class="select2 form-select" id="select2-basic">';
+        $html = '<select name="category_id" class="select2 form-select" id="category_id-basic">
+                    <option value="">Select Category</option>';
         foreach($categories as $category){
-            $html .= '<option value="'.$category->id.'">'.$category->name.'</option>';
+            $html .= '<option value="'.$category->id.'">'.$category->title.'</option>';
         }
         $html.='</select>';
 
+        return $html;
 
     }
 

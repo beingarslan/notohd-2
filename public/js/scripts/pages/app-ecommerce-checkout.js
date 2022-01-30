@@ -29,13 +29,16 @@ $(function () {
     // update
     update.on('click', function () {
         $(this).text('Updating...');
-        console.log( $('#inputTag' + $(this).val()).val());
+        console.log( 'inputTag' + $('#price' + $(this).val()).closest('select').find('select2').val());
+        // closset .select2
+
         $.ajax({
             type: 'POST',
             url: '/admin/images/update',
             data: {
                 id: $(this).val(),
                 price: $('#price' + $(this).val()).val(),
+                category_id : $('#price' + $(this).val()).closest('.select2').val(),
                 tags: $('#inputTag' + $(this).val()).val()
             },
             success: function (data) {
