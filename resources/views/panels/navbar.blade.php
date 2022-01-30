@@ -55,10 +55,6 @@
                         <div class="avatar bg-light-primary">
                             <div class="avatar-content">{{ Auth::user() ? substr(Auth::user()->name, 0, 2) : 'No'}}</div>
                         </div>
-                        <!-- <span class="avatar">
-                            <img class="round" src="{{ Auth::user() ? Auth::user()->profile_photo_url : asset('images/portrait/small/avatar-s-11.jpg') }}" alt="avatar" height="40" width="40">
-                            <span class="avatar-status-online"></span>
-                        </span> -->
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
                         <h6 class="dropdown-header">Manage Profile</h6>
