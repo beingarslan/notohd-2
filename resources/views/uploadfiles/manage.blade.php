@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/wizard/bs-stepper.min.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/spinner/jquery.bootstrap-touchspin.css')) }}">
 <link rel="stylesheet" href="{{ asset(mix('vendors/css/extensions/toastr.min.css')) }}">
+<link rel="stylesheet" href="{{ asset(mix('vendors/css/forms/select/select2.min.css')) }}">
 @endsection
 
 @section('page-style')
@@ -97,6 +98,7 @@
                                 </div>
                             </div>
                         </div>
+                        {{$categories}}
                         <input type="text" id="inputTag{{ $image->id }}" class="form-control inputTag" value="{{ ($image->tags) }}" data-role="tagsinput">
                         <!-- <span class="delivery-date text-muted">Delivery by, Wed Apr 25</span>
                         <span class="text-success">17% off 4 offers Available</span> -->
@@ -179,10 +181,12 @@
 <script src="{{ asset(mix('vendors/js/forms/wizard/bs-stepper.min.js')) }}"></script>
 <script src="{{ asset(mix('vendors/js/forms/spinner/jquery.bootstrap-touchspin.js')) }}"></script>
 <script src="{{ asset(mix('vendors/js/extensions/toastr.min.js')) }}"></script>
+<script src="{{ asset(mix('vendors/js/forms/select/select2.full.min.js')) }}"></script>
 @endsection
 
 @section('page-script')
 <!-- Page js files -->
+<script src="{{ asset(mix('js/scripts/forms/form-select2.js')) }}"></script>
 <script src="{{ asset(mix('js/scripts/pages/app-ecommerce-checkout.js')) }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 <script src="https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>

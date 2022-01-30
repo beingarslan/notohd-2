@@ -16,6 +16,7 @@ class UploadFile extends Model
         'filename',
         'thumbnail',
         'tags',
+        'category_id',
         'created_at',
         'updated_at',
     ];
@@ -24,5 +25,11 @@ class UploadFile extends Model
     public function getPathAttribute()
     {
         return Storage::disk('Wasabi')->url($this->filename);
+    }
+
+    // relationship with category
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

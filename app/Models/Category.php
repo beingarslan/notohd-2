@@ -31,4 +31,11 @@ class Category extends Model
     public function child(){
         return $this->hasMany(Category::class, 'parent_id');
     }
+
+
+    // relationship with upload file
+    public function uploadFiles()
+    {
+        return $this->hasMany(UploadFile::class);
+    }
 }

@@ -19,6 +19,7 @@ class CreateUploadFilesTable extends Migration
             $table->text('thumbnail');
             $table->integer('price')->default(0)->nullable();
             $table->json('tags')->nullable();
+            $table->foreignId('category_id')->nullable()->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

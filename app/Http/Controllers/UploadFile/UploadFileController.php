@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UploadFile;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\UploadFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -24,10 +25,24 @@ class UploadFileController extends Controller
         foreach ($images as $image) {
             $image->tags = str_replace(array('[', ']', '"'), '', $image->tags);
         }
+
         return view('uploadfiles.manage', [
             'images' => $images,
             'pageConfigs' => $pageConfigs,
+            'categories' => $this->categories_html(),
         ]);
+    }
+
+    public function categories_html(){
+
+        $categories = Category::all();
+        $html = '<select name="category_id" class="select2 form-select" id="select2-basic">';
+        foreach($categories as $category){
+            $html .= '<option value="'.$category->id.'">'.$category->name.'</option>';
+        }
+        $html.='</select>';
+
+
     }
 
     public function upload(Request $request)
@@ -119,12 +134,12 @@ class UploadFileController extends Controller
         try {
             $id =  $request->get('id');
             // string to array
-            $tags = json_encode($request->get('tags'));
+            $tags = $request->get('tags') ? json_encode($request->get('tags')) : null;
             // $tags =  $request->get('tags');
 
             $update = UploadFile::where('id', $id)->update([
                 'price' => $request->input('price'),
-                'tags' => ($tags),
+                'tags' => $tags
             ]);
 
             return response()->json([
