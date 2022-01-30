@@ -11,6 +11,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
 use Google\Cloud\Vision\V1\Feature\Type;
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+use Illuminate\Support\Facades\DB;
 use Image;
 
 class UploadFileController extends Controller
@@ -26,26 +27,15 @@ class UploadFileController extends Controller
             $image->tags = str_replace(array('[', ']', '"'), '', $image->tags);
         }
 
+        $categories = Category::all();
+
         return view('uploadfiles.manage', [
             'images' => $images,
             'pageConfigs' => $pageConfigs,
-            'categories' => $this->categories_html(),
+            'categories' => $categories
         ]);
     }
 
-    public function categories_html(){
-
-        $categories = Category::all();
-        $html = '<select name="category_id" class="select2 form-select" id="category_id-basic">
-                    <option value="">Select Category</option>';
-        foreach($categories as $category){
-            $html .= '<option value="'.$category->id.'">'.$category->title.'</option>';
-        }
-        $html.='</select>';
-
-        return $html;
-
-    }
 
     public function upload(Request $request)
     {
@@ -132,7 +122,8 @@ class UploadFileController extends Controller
         }
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         try {
             $id =  $request->get('id');
             // string to array
@@ -141,7 +132,8 @@ class UploadFileController extends Controller
 
             $update = UploadFile::where('id', $id)->update([
                 'price' => $request->input('price'),
-                'tags' => $tags
+                'tags' => $tags,
+                'category_id' => $request->input('category_id'),
             ]);
 
             return response()->json([
@@ -156,6 +148,29 @@ class UploadFileController extends Controller
             return response()->json(['error' => $th->getMessage()]);
         } catch (\Throwable $th) {
             //throw $th;
+        }
+    }
+
+    public function updatebulk(Request $request){
+        try {
+            DB::transaction(function () use ($request) {
+                $ids = $request->get('ids');
+                // $ids = explode(',', $ids);
+                foreach ($ids as $id) {
+                    UploadFile::where('id', $id)->update([
+                        'price' => $request->input('price'),
+                    ]);
+                }
+            });
+            return response()->json([
+                'status' => 'success',
+                'message' => 'File updated successfully',
+                'id' => $request->input('id'),
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['message' => $th->getMessage()]);
+
         }
     }
 }

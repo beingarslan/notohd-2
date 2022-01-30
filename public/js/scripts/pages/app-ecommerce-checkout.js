@@ -29,7 +29,7 @@ $(function () {
     // update
     update.on('click', function () {
         $(this).text('Updating...');
-        console.log( 'inputTag' + $('#price' + $(this).val()).closest('select').find('select2').val());
+        // console.log( 'inputTag' + $('#price' + $(this).val()).closest('select').find('select2').val());
         // closset .select2
 
         $.ajax({
@@ -38,7 +38,7 @@ $(function () {
             data: {
                 id: $(this).val(),
                 price: $('#price' + $(this).val()).val(),
-                category_id : $('#price' + $(this).val()).closest('.select2').val(),
+                category_id : $('#category_id' + $(this).val()).val(),
                 tags: $('#inputTag' + $(this).val()).val()
             },
             success: function (data) {

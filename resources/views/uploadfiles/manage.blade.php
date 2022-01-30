@@ -78,6 +78,10 @@
             <!-- Checkout Place Order Left starts -->
             <div class="checkout-items">
                 @foreach($images as $image)
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input bulk_item" type="checkbox" id="inlineCheckbox1" value="{{$image->id}}">
+                    <!-- <label class="form-check-label" for="inlineCheckbox1">Select for bulk action</label> -->
+                </div>
                 <div class="card ecommerce-card" id="image{{ ($image->id) }}">
                     <div class="item-img ms-1">
                         <a href="#{{url('app/ecommerce/details')}}">
@@ -85,7 +89,12 @@
                         </a>
                     </div>
                     <div class="card-body">
-                    @php echo $categories; @endphp
+                        <select class=" form-select select-sm" name="category_id" id="category_id{{$image->id}}">
+                            <option value="">Select Category</option>
+                            @foreach($categories as $category)
+                            <option {{$image->category_id == $category->id ? 'selected' : '' }} value="{{$category->id}}">{{$category->title}}</option>
+                            @endforeach
+                        </select>
 
                         <!-- <div class="item-name">
                             <h6 class="mb-0"><a href="{{url('app/ecommerce/details')}}" class="text-body">Apple Watch Series 5</a></h6>
@@ -105,6 +114,7 @@
                         <span class="text-success">17% off 4 offers Available</span> -->
                     </div>
                     <div class="item-options text-center">
+
                         <button type="button" id="{{ ($image->id) }}" class="btn btn-light mt-1 remove-wishlist">
                             <i data-feather="x" class="align-middle me-25"></i>
                             <span class="remove{{ ($image->id) }}">Remove</span>
@@ -117,7 +127,7 @@
                 </div>
                 @endforeach
                 <div class="mb-3">
-                {{ $images->links() }}
+                    {{ $images->links() }}
                 </div>
             </div>
             <!-- Checkout Place Order Left ends -->
@@ -127,13 +137,13 @@
             <div class="checkout-options">
                 <div class="card">
                     <div class="card-body">
-                        <label class="section-label form-label mb-1">Options</label>
+                        <label class="section-label form-label mb-1">Bulk actions</label>
                         <div class="coupons input-group input-group-merge">
-                            <input type="text" class="form-control" placeholder="Coupons" aria-label="Coupons" aria-describedby="input-coupons" />
-                            <span class="input-group-text text-primary ps-1" id="input-coupons">Apply</span>
+                            <input type="text" class="form-control" placeholder="Price" id="bulk-price" aria-label="Coupons" aria-describedby="input-coupons" />
+                            <a class="input-group-text text-primary ps-1" id="Apply-Bulk-action" href="javascript:void(0)">Apply</a>
                         </div>
-                        <hr />
-                        <div class="price-details">
+                        <!-- <hr /> -->
+                        <!-- <div class="price-details">
                             <h6 class="price-title">Price Details</h6>
                             <ul class="list-unstyled">
                                 <li class="price-detail">
@@ -165,7 +175,7 @@
                                 </li>
                             </ul>
                             <button type="button" class="btn btn-primary w-100 btn-next place-order">Place Order</button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <!-- Checkout Place Order Right ends -->
@@ -195,6 +205,48 @@
     // document ready
     $(document).ready(function() {
         $(".inputTag").tagsinput('items');
+    });
+    $(document).ready(function() {
+        $('#Apply-Bulk-action').on('click', function() {
+            if ($('#bulk-price').val() != '') {
+                $(this).attr('disabled', true);
+                $(this).text('Applying...');
+                var items = [];
+                $('.bulk_item').each(function() {
+                    if ($(this).is(':checked')) {
+                        items.push($(this).val());
+                    }
+                });
+                console.log(items);
+                $.ajax({
+                    url: "{{ route('admin.images.update.bulk') }}",
+                    type: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "ids": items,
+                        "price": $('#bulk-price').val(),
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status == 'success') {
+                            toastr.success(data.message);
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            toastr.error(data.message);
+                        }
+                    }
+                });
+
+                $(this).attr('disabled', false);
+                $(this).text('Apply');
+            } else {
+                toastr.error('Please enter price', 'Error', {
+                    timeOut: 5000,
+                });
+            }
+        });
     });
 </script>
 @endsection

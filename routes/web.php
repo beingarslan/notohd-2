@@ -95,6 +95,7 @@ Route::group(
                         Route::post('/remove', [UploadFileController::class, 'remove'])->name('remove');
                         Route::post('/update', [UploadFileController::class, 'update'])->name('update');
                         Route::post('/remove/file', [UploadFileController::class, 'removefile'])->name('remove.file');
+                        Route::post('/update/bulk', [UploadFileController::class, 'updatebulk'])->name('update.bulk');
                     }
                 );
             }
