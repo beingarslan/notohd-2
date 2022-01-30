@@ -166,7 +166,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-primary w-100" id="apply-filter" >Apply Filter</button>
+                                <button type="button" class="btn btn-primary w-100" id="apply-filter">Apply Filter</button>
                             </div>
                         </form>
                     </div>
@@ -291,7 +291,7 @@
             console.log($('#filter-page').val());
             $price = $('#filter-price').val();
             $page = $('#filter-page').val();
-            var url = window.location.href+'?price='+$price+'&per_page='+$page+'&page=1';
+            var url = window.location.href + '?price=' + $price + '&per_page=' + $page + '&page=1';
             window.location.href = url;
         });
     });
