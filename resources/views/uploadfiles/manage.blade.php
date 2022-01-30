@@ -135,6 +135,42 @@
             @if(count($images) > 0)
             <!-- Checkout Place Order Right starts -->
             <div class="checkout-options">
+                <!-- Filters -->
+                <div class="card">
+                    <div class="card-body">
+
+                        <form action="" method="get">
+                            <div class="price-details">
+                                <h6 class="price-title">Filters</h6>
+                                <!-- <div class="row mb-1">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Category</label>
+                                        <select class="form-select select"></select>
+                                    </div>
+                                </div>
+                            </div> -->
+                                <!-- <div class="row mb-1">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label">Price</label>
+                                            <input type="text" class="form-control" id="filter-price" placeholder="Price" />
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="row mb-1">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label">Items per Page</label>
+                                            <input type="text" value="" class="form-control" id="filter-page" placeholder="Items per Page" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary w-100" id="apply-filter" >Apply Filter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <label class="section-label form-label mb-1">Bulk actions</label>
@@ -180,6 +216,7 @@
                 </div>
                 <!-- Checkout Place Order Right ends -->
             </div>
+
             @endif
         </div>
 
@@ -246,6 +283,16 @@
                     timeOut: 5000,
                 });
             }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#apply-filter').on('click', function() {
+            console.log($('#filter-page').val());
+            $price = $('#filter-price').val();
+            $page = $('#filter-page').val();
+            var url = window.location.href+'?price='+$price+'&per_page='+$page+'&page=1';
+            window.location.href = url;
         });
     });
 </script>

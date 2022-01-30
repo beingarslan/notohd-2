@@ -18,11 +18,19 @@ class UploadFileController extends Controller
 {
     public function manage(Request $request)
     {
+
         $pageConfigs = [
             'pageClass' => 'ecommerce-application',
         ];
         // paginatation
-        $images = UploadFile::paginate(12);
+        $images = "";
+        if($request->has('per_page')){
+            $images = UploadFile::paginate($request->per_page);
+        }
+        else{
+            $images = UploadFile::paginate(10);
+        }
+
         foreach ($images as $image) {
             $image->tags = str_replace(array('[', ']', '"'), '', $image->tags);
         }
