@@ -62,6 +62,8 @@ Route::group(
                         Route::post('/save', [UserController::class, 'save'])->name('save');
                         // Route::post('/edit/role', [UserController::class, 'edit_role'])->name('edit.role');
                         Route::post('/remove', [UserController::class, 'remove'])->name('remove');
+
+                        Route::get('/profile', [UserController::class, 'profile'])->name('profile');
                     }
                 );
 

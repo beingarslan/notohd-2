@@ -59,11 +59,11 @@
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
                         <h6 class="dropdown-header">Manage Profile</h6>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ Route::has('profile.show') ? route('profile.show') : 'javascript:void(0)' }}">
+                        <!-- <a class="dropdown-item" href="{{ Route::has('profile.show') ? route('profile.show') : 'javascript:void(0)' }}">
                             <i class="me-50" data-feather="user"></i> Profile
-                        </a>
+                        </a> -->
 
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="/admin/users/profile">
                             <i class="me-50" data-feather="settings"></i> Settings
                         </a>
 

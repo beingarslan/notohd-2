@@ -128,4 +128,15 @@ class UserController extends Controller
             return redirect()->back();
         }
     }
+
+    // profile
+
+    public function profile(Request $request){
+        try {
+            $user = User::find($request->id);
+            return view('users.profile', compact('user'));
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
